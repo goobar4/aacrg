@@ -262,22 +262,24 @@ class Container extends \yii\db\ActiveRecord
     }
 
 
-   // decide soft or permanent delation
+    // decide soft or permanent delation
 
     public function delation()
     {
         if ($this->isDeleted == 1) {
 
-            if($this->hasChildren() == 0 or $this->prepType == '21'){
-
-                return $this->delete();
+            if ($this->hasChildren() == 0 or $this->prepType == '21') {
+                if (Yii::$app->user->can('canAdmin')) {
+                    return $this->delete();
+                } else {
+                    throw new \yii\web\ForbiddenHttpException('You have not right to delete this record.');
+                }
             } else {
                 return false;
             }
-          
         } elseif ($this->isDeleted == 0) {
-                                
-            return ( ($this->hasDeletedChildren() == ($this->hasChildren()- $this->hasTissue())) or ($this->hasChildren()==0) ) ?  $this->softDelete() : false;
+
+            return (($this->hasDeletedChildren() == ($this->hasChildren() - $this->hasTissue())) or ($this->hasChildren() == 0)) ?  $this->softDelete() : false;
         }
     }
 

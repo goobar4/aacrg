@@ -88,7 +88,7 @@ class Host extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['occurrenceID', 'sciName', 'placeName', 'occurenceDate', 'isEmpty'],  'required'],
+            [['occurrenceID', 'sciName', 'placeName', 'occurenceDate', 'isEmpty','determiner'],  'required'],
             [['sciName', 'placeName', 'updatedBy', 'createdAt', 'idConfidence'], 'integer'],
             [['isEmpty', 'isDeleted'], 'integer', 'min' => 0, 'max' => 1],
             [['idConfidence'], 'integer', 'min' => 0, 'max' => 100],

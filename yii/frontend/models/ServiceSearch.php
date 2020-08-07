@@ -43,6 +43,8 @@ class ServiceSearch extends Service
 
         // add conditions that should always apply here
 
+        $query->where(['<>','target','prepType']);
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

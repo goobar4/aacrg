@@ -18,6 +18,7 @@ use yii\filters\AccessControl;
 use yii\db\IntegrityException;
 use yii\helpers\BaseFileHelper;
 use frontend\models\ServiceLayer;
+use yii\web\ForbiddenHttpException;
 
 
 /**
@@ -144,17 +145,29 @@ class HostController extends Controller
 
         //look for children of the record (container)
        
-        $sql = (new \yii\db\Query())
-            ->select(['container.containerId', 'sample.id', 'taxonomy.scientificName',
-            'sample.individualCount','service.value','container.prepType'])
-            ->from('container')
-            ->leftJoin('sample', 'container.containerId=sample.parid')
-            ->leftJoin('taxonomy', 'sample.scienName=taxonomy.id')
-            ->leftJoin('service', 'container.prepType=service.id')
-            ->where(['container.parId' => $id])
-            ->andWhere(['container.isDeleted'=>$del])
-            
-            ->all();
+        $sql1 = (new \yii\db\Query())
+        ->select(['container.containerId', 'sample.id', 'taxonomy.scientificName',
+        'sample.individualCount','service.value','container.prepType'])
+        ->from('container')
+        ->leftJoin('sample', 'container.containerId=sample.parid')
+        ->leftJoin('taxonomy', 'sample.scienName=taxonomy.id')
+        ->leftJoin('service', 'container.prepType=service.id')
+        ->where(['container.parId' => $id])
+        ->andWhere(['container.isDeleted'=>$del])
+        ->andWhere(['sample.isDeleted'=>$del]);
+                    
+         $sql2 = (new \yii\db\Query())
+        ->select(['container.containerId', 'sample.id', 'taxonomy.scientificName',
+        'sample.individualCount','service.value','container.prepType'])
+        ->from('container')
+        ->leftJoin('sample', 'container.containerId=sample.parid')
+        ->leftJoin('taxonomy', 'sample.scienName=taxonomy.id')
+        ->leftJoin('service', 'container.prepType=service.id')
+        ->where(['container.parId' => $id])
+        ->andWhere(['container.isDeleted'=>$del])
+        ->andWhere(['sample.isDeleted'=>NULL]);
+
+        $sql = $sql1->union($sql2)->all();
        
         //look for images
 
@@ -265,6 +278,7 @@ class HostController extends Controller
             }
             return $this->redirect(['index']);
         } else {
+            if (Yii::$app->user->can('canAdmin')){
             try {
                 if ($model->isEmpty == 1 and $model->isDeleted == 1) {
                     $empty = Container::find()->where(['parId' => $id]);
@@ -290,6 +304,9 @@ class HostController extends Controller
                 Yii::$app->session->setFlash('error', 'The record has not been deleted with the server since it is related to other elements.');
                 return $this->redirect(['view', 'id' => $id]);
             }
+        } else {
+            throw new ForbiddenHttpException('You have not right to delete this record.');
+        }
         }
     }
 
