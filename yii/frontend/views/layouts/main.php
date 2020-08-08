@@ -2,10 +2,8 @@
 use yii\helpers\Html;
 use frontend\assets\AppAsset;
 use yii\helpers\Url;
-
 /* @var $this \yii\web\View */
 /* @var $content string */
-
 
 if (Yii::$app->controller->action->id === 'login') { 
 /**
@@ -35,7 +33,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?= Html::csrfMetaTags() ?>
-        <?php $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/frog.ico']); ?>
+        <?php $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::base(true).'/frog.ico']); ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>

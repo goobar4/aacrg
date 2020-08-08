@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\models\Host */
@@ -80,7 +81,7 @@ $(document).ready(function(){
     //show modal for new location and load form in this modal
     $('#myBtn').click(function(){
       $('#myModal').modal();
-      $('#myModal').find('#main').load('/index.php?r=locality%2Frenderajax');
+      $('#myModal').find('#main').load('".Url::toRoute(['locality/renderajax'], $schema = true)."');
       //show loader
       $('#host-sciname')[0].append('<option value=>dwe511111</option>');
     });

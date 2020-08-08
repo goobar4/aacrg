@@ -10,7 +10,7 @@ use kartik\select2\Select2;
 /* @var $model frontend\models\Locality */
 /* @var $form yii\widgets\ActiveForm */
 
-$flag = Url::current()=='/index.php?r=locality%2Frenderajax' ? true : false;
+$flag = Url::current()== Url::toRoute('locality/renderajax') ? true : false;
 
 ?>
 
@@ -90,7 +90,7 @@ $('#loc').on('beforeSubmit', function(){
     $('#myModal').find('#main').empty();
     $('#myModal').find('#main').append(loader);
     $.ajax({
-    url: '/index.php?r=locality%2Fcreate',
+    url: '".Url::toRoute(['locality/create'], $schema = true)."',
     type: 'POST',
     data: data,
     success: function(res){
@@ -98,7 +98,7 @@ $('#loc').on('beforeSubmit', function(){
     if(res.res=='error'){
         //alert('Error of validation.');
         $('#myModal').modal();        
-        $('#myModal').find('.modal-body').load('/index.php?r=locality%2Frenderajax');
+        $('#myModal').find('.modal-body').load('".Url::toRoute(['locality/renderajax'], $schema = true)."');
     }
         else{
             
