@@ -14,8 +14,8 @@ Instalation
 -----------
 1. Download the code
 2. Run <i>composer update</i> in <path to folder with site files>/yii
-3.  Import database from <path to the folder with site files>/yii/sql/data_base.sql
-4.Configure access of the application to your database:  <path to the folder with site files>/yii/common/config
+3. Import database from ../yii/sql/data_base.sql
+4.Configure access of the application to your database:  ../yii/common/config/main.php
 
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=<...>',
