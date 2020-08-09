@@ -3,7 +3,7 @@ AACRG
 
 [African amphibian conservation group](http://natural-sciences.nwu.ac.za/african-amphibian-conservation-research-group/aacrg-about) developed this application for managing parasitological collection for its own needs. The [demo site](http://syrota.info/wormbase/) is available:
 
-    [http://syrota.info/wormbase/](http://syrota.info/wormbase/)
+            http://syrota.info/wormbase/
 
 Requirements
 ------------
