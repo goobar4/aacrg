@@ -83,7 +83,7 @@ class Sample extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['scienName', 'parId', 'identifiedBy'], 'required'],
+            [['scienName', 'identifiedBy'], 'required'],
             [['scienName', 'site', 'individualCount', 'basisOfRecord', 'typeStatus', 'identifiedBy', 'confidence', 'createdBy', 'createdAt', 'editedAt', 'updatedBy'], 'integer'],
             [['isDeleted'], 'boolean'],
             [['confidence'],'integer','min'=>0,'max'=>100],

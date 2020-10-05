@@ -96,6 +96,7 @@
 
                     ["label" => "Profile", "url" => ['user/view', 'id'=> Yii::$app->user->id], "icon" => "user"],
                     ["label" => "Export", "url" => ['search/export'], "icon" => "fas fa-download", 'visible' => Yii::$app->user->can('canAdmin')],
+                    ["label" => "Import", "url" => ['import/index'], "icon" => "fas fa-upload", 'visible' => Yii::$app->user->can('canAdmin')],
 					["label" => "About", "url" => ['site/about'], "icon" => "question"],
                   
                 ],

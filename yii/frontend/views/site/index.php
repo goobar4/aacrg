@@ -6,7 +6,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 
-$this->title = 'AACRG';
+$this->title = Yii::$app->name;
 ?>
 <div class="site-index">
   <div class="jumbotron">

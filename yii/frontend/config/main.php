@@ -8,9 +8,9 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
-    'name' => 'AACRG',
+    'name' => 'ParaSiteDB',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log','thumbnail'],
+    'bootstrap' => ['log','thumbnail','debug'],
     'modules' => [
         'gridview' =>  [
             'class' => '\kartik\grid\Module',
@@ -20,6 +20,10 @@ return [
             // message source
             // 'downloadAction' => 'gridview/export/download',
             // 'i18n' => []
+        ],
+        'debug' => [
+            'class' => 'yii\debug\Module',
+            'allowedIPs' => ['*']
         ]
     ],
     'controllerNamespace' => 'frontend\controllers',
@@ -57,14 +61,14 @@ return [
         ],
         
         
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
+        
     ],
     
     'params' => $params,
