@@ -183,17 +183,21 @@ class Import extends Model
         }
 
         $container = $this->loadContainerModel($fileop);
-        $container->validate();
-        $errors = $container->getFirstErrors();
-        if (!empty($errors)) {
-            return [false, $this->errorList($errors)];
+        if ($container->containerId!=='') {
+            $container->validate();
+            $errors = $container->getFirstErrors();
+            if (!empty($errors)) {
+                return [false, $this->errorList($errors)];
+            }
         }
 
         $sample = $this->loadSampleModel($fileop);
-        $sample->validate();
-        $errors = $sample->getFirstErrors();
-        if (!empty($errors)) {
-            return [false, $this->errorList($errors)];
+        if (isset($sample->scienName)) {
+            $sample->validate();
+            $errors = $sample->getFirstErrors();
+            if (!empty($errors)) {
+                return [false, $this->errorList($errors)];
+            }
         }
     }
 

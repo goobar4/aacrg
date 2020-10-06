@@ -35,12 +35,12 @@ class StorageController extends Controller
                     [
                         'actions' => ['create','update','delete'],
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'roles' => ['admin', 'user'],
                     ],
                     [
                         'actions' => ['index','view'],
                         'allow' => true,
-                        'roles' => ['admin','user','guest'],
+                        'roles' => ['admin','user','student','guest'],
                     ],
                 ],
             ]

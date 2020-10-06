@@ -41,12 +41,12 @@ class SampleController extends Controller
                     [
                         'actions' => ['index', 'view'],
                         'allow' => true,
-                        'roles' => ['admin', 'user', 'guest'],
+                        'roles' => ['admin', 'user', 'student', 'guest'],
                     ],
                     [
                         'actions' => ['create', 'taxon-list', 'deleted-sample', 'add-collection', 'remove-collection', 'collection'],
                         'allow' => true,
-                        'roles' => ['admin', 'user'],
+                        'roles' => ['admin', 'user', 'student'],
                     ],
                     [
                         'allow' => true,

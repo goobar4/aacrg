@@ -35,12 +35,12 @@ class TaxonomyController extends Controller
                     [
                         'actions' => ['create','update','delete', 'taxon-list'],
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'roles' => ['admin', 'user'],
                     ],
                     [
                         'actions' => ['index','view'],
                         'allow' => true,
-                        'roles' => ['admin','user','guest'],
+                        'roles' => ['admin','user', 'student','guest'],
                     ],
                 ],
             ]

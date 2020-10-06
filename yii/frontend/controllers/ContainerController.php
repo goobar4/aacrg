@@ -39,12 +39,12 @@ class ContainerController extends Controller
                     [
                         'actions' => ['index','view'],
                         'allow' => true,
-                        'roles' => ['admin','user','guest'],
+                        'roles' => ['admin','user', 'student','guest'],
                     ],
                     [
                         'actions' => ['create','update','delete','restore','deleted-container'],
                         'allow' => true,
-                        'roles' => ['admin','user'],
+                        'roles' => ['admin','user', 'student'],
                     ],
                 ],
             ]

@@ -43,11 +43,9 @@ class UserController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['view','update','changepassword'],
+                        'actions' => ['view', 'update', 'changepassword'],
                         'matchCallback' => function ($rule, $action) {
-                           // var_dump(Yii::$app->request->queryParams['id']);
-                           // die();
-                            return Yii::$app->user->can('canProfile', ['id'=>Yii::$app->request->queryParams['id']]);
+                        return Yii::$app->user->can('canProfile', ['id' => Yii::$app->request->queryParams['id']]);
                         }
                     ],
                 ],

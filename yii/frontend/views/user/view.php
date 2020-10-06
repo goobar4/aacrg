@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $model->surname;
 
                     <li><?= Html::a('admin', ['changerole', 'id' => $model->id, 'name' => 'admin']) ?></li>
                     <li><?= Html::a('user', ['changerole', 'id' => $model->id, 'name' => 'user']) ?></li>
+                    <li><?= Html::a('student', ['changerole', 'id' => $model->id, 'name' => 'student']) ?></li>
                     <li><?= Html::a('guest', ['changerole', 'id' => $model->id, 'name' => 'guest']) ?></li>
                     <li><?= Html::a('nonactive', ['changerole', 'id' => $model->id, 'name' => 'nonactive']) ?></li>
                 </ul>

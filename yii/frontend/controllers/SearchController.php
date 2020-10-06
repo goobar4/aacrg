@@ -25,7 +25,7 @@ class SearchController extends \yii\web\Controller
                     [
                         'actions' => ['vial'],
                         'allow' => true,
-                        'roles' => ['admin','user','guest'],
+                        'roles' => ['admin','user', 'student', 'guest'],
                     ],
                 ],
             ]

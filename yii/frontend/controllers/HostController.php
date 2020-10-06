@@ -44,12 +44,12 @@ class HostController extends Controller
                     [
                         'actions' => ['index', 'view'],
                         'allow' => true,
-                        'roles' => ['admin', 'user', 'guest'],
+                        'roles' => ['admin', 'user', 'student', 'guest'],
                     ],
                     [
-                        'actions' => ['test','create', 'update', 'delete', 'restore', 'history', 'place-list', 'taxon-list', 'deleted-host', 'manage-image', 'delete-image'],
+                        'actions' => ['create', 'update', 'delete', 'restore', 'history', 'place-list', 'taxon-list', 'deleted-host', 'manage-image', 'delete-image'],
                         'allow' => true,
-                        'roles' => ['admin', 'user'],
+                        'roles' => ['admin', 'user', 'student'],
                     ],
                    
                 ],

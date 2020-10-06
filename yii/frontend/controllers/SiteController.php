@@ -27,7 +27,7 @@ class SiteController extends Controller
                     [
                         'actions' => ['index', 'upload-image', 'logout', 'about'],
                         'allow' => true,
-                        'roles' => ['admin', 'user', 'guest'],
+                        'roles' => ['admin', 'user', 'student', 'guest'],
 
                     ],
                     [

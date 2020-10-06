@@ -54,6 +54,7 @@ class UserSearch extends User
         ->where(['role.item_name' => 'admin'])
         ->orWhere(['role.item_name' => 'user'])
         ->orWhere(['role.item_name' => 'guest'])
+        ->orWhere(['role.item_name' => 'student'])
         ->orWhere(['role.item_name' => null])
         ->orWhere(['role.item_name' => 'nonactive']);
 

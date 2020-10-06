@@ -39,9 +39,10 @@ class Locality extends \yii\db\ActiveRecord
     {
         return [
             [['localityName', 'province', 'country', 'decimalLatitude', 'decimalLongitude'], 'required'],
-            [['decimalLatitude', 'decimalLongitude', 'province', 'country', 'island', 'elevation'], 'integer'],
+            [['province', 'country', 'island', 'elevation'], 'integer'],
             [['localityName', 'typeHabitate'], 'string', 'max' => 255],
             [['cordMethod', 'datum'], 'string', 'max' => 255],
+            [['decimalLatitude', 'decimalLongitude'], 'string'],
             [['localityName'], 'unique'],
         ];
     }
