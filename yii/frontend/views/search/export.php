@@ -60,7 +60,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'label' => 'Phylum (h)',
         'format' => 'raw'
     ],
-
+    [
+        'attribute' => 'sex',
+        'label' => 'sex (h)',
+        'format' => 'raw'
+    ],
     [
         'attribute' => 'age',
         'label' => 'lifeStage (h)',
@@ -104,8 +108,8 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
 
     [
-        'attribute' => 'hostN',
-        'label' => 'Organism ID',
+        'attribute' => 'containerId',
+        'label' => 'container',
         'format' => 'raw'
     ],
 

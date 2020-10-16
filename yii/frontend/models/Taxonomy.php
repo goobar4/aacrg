@@ -32,7 +32,7 @@ class Taxonomy extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['scientificName'], 'required'],
+            [['scientificName','parId'], 'required'],
             [['scientificName'], 'string', 'max' => 255],
             [['scientificName'], 'unique'],
             [['parId','rank'],'integer']
@@ -47,7 +47,7 @@ class Taxonomy extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'scientificName' => 'Scientific Name',
-            'parId' => 'parId',
+            'parId' => 'parent',
             'rank' => 'rank',
            
         ];

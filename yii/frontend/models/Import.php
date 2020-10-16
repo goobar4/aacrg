@@ -31,6 +31,8 @@ class Import extends Model
 
     public function import()
     {
+        set_time_limit(0);
+        
         if ($this->uploadFile()) {
 
 
@@ -55,7 +57,15 @@ class Import extends Model
 
     private function uploadFile()
     {
-        if ($this->file && $this->isCSV()) {
+        //$encoding = mb_detect_encoding(file_get_contents($this->file->tempName));
+        ///var_dump($encoding);
+        //die();
+        //if($encoding !== 'UTF-8'){
+            //$this->log = 'File encoding should be UTF-8.';
+            //return false; 
+        //}  
+
+        if ($this->file && $this->isCSV()) {            
             $this->saveCSV();
             return true;
         } else {
@@ -105,10 +115,16 @@ class Import extends Model
     {
         $fileop = $this->openCSV();
         $diff = array_diff($fileop, self::TITLES);
-        if (empty($diff)) {
+        
+        $first_elem = substr($fileop[0], 3);
+        $fileop[0] =  $first_elem;
+        $diff_BOM = array_diff($fileop, self::TITLES);
+        
+        if (empty($diff) || empty($diff_BOM)) {
             return true;
         } else {
-            $this->log = 'Titles of the column should be as in the example. ';
+            
+            $this->log = 'Titles of the column should be as in the example or you used inappropriate encoding of the file.';
             return false;
         }
     }
@@ -215,8 +231,8 @@ class Import extends Model
         $host = new Host();
         $host->occurrenceID = $row[0];
         $host->sciName = $row[1];
-        $host->sex = $row[2];
-        $host->age = $row[3];
+        $host->sex = $row[2].'';
+        $host->age = $row[3].'';
         $host->natureOfRecord = $row[4];
         $host->placeName = $row[5];
         $host->occurenceDate = $row[6];
