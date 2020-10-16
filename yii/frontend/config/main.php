@@ -10,7 +10,7 @@ return [
     'id' => 'app-frontend',
     'name' => 'ParaSiteDB',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log','thumbnail','debug'],
+'bootstrap' => ['log','thumbnail'/*,'debug'*/],
     'modules' => [
         'gridview' =>  [
             'class' => '\kartik\grid\Module',
