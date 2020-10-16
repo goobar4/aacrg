@@ -2,10 +2,10 @@
 -- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Aug 07, 2020 at 01:52 AM
--- Server version: 10.0.38-MariaDB
--- PHP Version: 7.2.10
+-- Хост: localhost
+-- Час створення: Жов 16 2020 р., 13:06
+-- Версія сервера: 5.7.25
+-- Версія PHP: 7.3.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `test`
+-- База даних: `db`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `access`
+-- Структура таблиці `access`
 --
 
 CREATE TABLE `access` (
@@ -37,7 +37,7 @@ CREATE TABLE `access` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auth_assignment`
+-- Структура таблиці `auth_assignment`
 --
 
 CREATE TABLE `auth_assignment` (
@@ -47,7 +47,7 @@ CREATE TABLE `auth_assignment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `auth_assignment`
+-- Дамп даних таблиці `auth_assignment`
 --
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
@@ -57,7 +57,7 @@ INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auth_item`
+-- Структура таблиці `auth_item`
 --
 
 CREATE TABLE `auth_item` (
@@ -71,7 +71,7 @@ CREATE TABLE `auth_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `auth_item`
+-- Дамп даних таблиці `auth_item`
 --
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
@@ -83,12 +83,13 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('canProfile', 2, NULL, NULL, NULL, NULL, NULL),
 ('guest', 1, NULL, NULL, NULL, NULL, NULL),
 ('nonactive', 1, NULL, NULL, NULL, NULL, NULL),
+('student', 1, NULL, NULL, NULL, NULL, NULL),
 ('user', 1, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auth_item_child`
+-- Структура таблиці `auth_item_child`
 --
 
 CREATE TABLE `auth_item_child` (
@@ -97,22 +98,24 @@ CREATE TABLE `auth_item_child` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `auth_item_child`
+-- Дамп даних таблиці `auth_item_child`
 --
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('admin', 'canAdmin'),
 ('admin', 'canEdit'),
-('admin', 'canProfile'),
 ('canEditUser', 'canEdit'),
-('canOwnProfile', 'canProfile'),
+('student', 'canEditUser'),
 ('user', 'canEditUser'),
-('user', 'canOwnProfile');
+('student', 'canOwnProfile'),
+('user', 'canOwnProfile'),
+('admin', 'canProfile'),
+('canOwnProfile', 'canProfile');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auth_rule`
+-- Структура таблиці `auth_rule`
 --
 
 CREATE TABLE `auth_rule` (
@@ -123,7 +126,7 @@ CREATE TABLE `auth_rule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `auth_rule`
+-- Дамп даних таблиці `auth_rule`
 --
 
 INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
@@ -133,7 +136,7 @@ INSERT INTO `auth_rule` (`name`, `data`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `collection`
+-- Структура таблиці `collection`
 --
 
 CREATE TABLE `collection` (
@@ -145,7 +148,7 @@ CREATE TABLE `collection` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `container`
+-- Структура таблиці `container`
 --
 
 CREATE TABLE `container` (
@@ -168,7 +171,7 @@ CREATE TABLE `container` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `host`
+-- Структура таблиці `host`
 --
 
 CREATE TABLE `host` (
@@ -194,7 +197,7 @@ CREATE TABLE `host` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `image`
+-- Структура таблиці `image`
 --
 
 CREATE TABLE `image` (
@@ -214,7 +217,7 @@ CREATE TABLE `image` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `locality`
+-- Структура таблиці `locality`
 --
 
 CREATE TABLE `locality` (
@@ -222,8 +225,8 @@ CREATE TABLE `locality` (
   `localityName` varchar(255) DEFAULT NULL,
   `province` int(7) DEFAULT NULL,
   `country` int(4) DEFAULT NULL,
-  `decimalLatitude` int(8) DEFAULT NULL,
-  `decimalLongitude` int(8) DEFAULT NULL,
+  `decimalLatitude` varchar(12) DEFAULT NULL,
+  `decimalLongitude` varchar(12) DEFAULT NULL,
   `typeHabitate` varchar(255) DEFAULT NULL,
   `island` int(5) DEFAULT NULL,
   `cordMethod` varchar(100) DEFAULT NULL,
@@ -231,10 +234,17 @@ CREATE TABLE `locality` (
   `elevation` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Дамп даних таблиці `locality`
+--
+
+INSERT INTO `locality` (`id`, `localityName`, `province`, `country`, `decimalLatitude`, `decimalLongitude`, `typeHabitate`, `island`, `cordMethod`, `datum`, `elevation`) VALUES
+(1, 'Potchefstroom', 26, 27, '-26.661450', '27.029254', '', NULL, '', '', '');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migration`
+-- Структура таблиці `migration`
 --
 
 CREATE TABLE `migration` (
@@ -243,7 +253,7 @@ CREATE TABLE `migration` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `migration`
+-- Дамп даних таблиці `migration`
 --
 
 INSERT INTO `migration` (`version`, `apply_time`) VALUES
@@ -259,7 +269,7 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `modelhistory`
+-- Структура таблиці `modelhistory`
 --
 
 CREATE TABLE `modelhistory` (
@@ -277,7 +287,7 @@ CREATE TABLE `modelhistory` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sample`
+-- Структура таблиці `sample`
 --
 
 CREATE TABLE `sample` (
@@ -302,7 +312,7 @@ CREATE TABLE `sample` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `service`
+-- Структура таблиці `service`
 --
 
 CREATE TABLE `service` (
@@ -313,7 +323,7 @@ CREATE TABLE `service` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `service`
+-- Дамп даних таблиці `service`
 --
 
 INSERT INTO `service` (`id`, `value`, `target`, `_table`) VALUES
@@ -346,12 +356,12 @@ INSERT INTO `service` (`id`, `value`, `target`, `_table`) VALUES
 (28, 'Zmiiinyy', 'island', 'locality'),
 (29, 'nosample', 'prepType', 'container'),
 (30, 'intestine', 'site', 'sample'),
-(31, 'gut', 'site', 'locality');
+(31, 'gut', 'site', 'sample');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `storage`
+-- Структура таблиці `storage`
 --
 
 CREATE TABLE `storage` (
@@ -368,7 +378,7 @@ CREATE TABLE `storage` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `taxonomy`
+-- Структура таблиці `taxonomy`
 --
 
 CREATE TABLE `taxonomy` (
@@ -379,7 +389,7 @@ CREATE TABLE `taxonomy` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `taxonomy`
+-- Дамп даних таблиці `taxonomy`
 --
 
 INSERT INTO `taxonomy` (`id`, `scientificName`, `parId`, `rank`) VALUES
@@ -392,7 +402,7 @@ INSERT INTO `taxonomy` (`id`, `scientificName`, `parId`, `rank`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Структура таблиці `user`
 --
 
 CREATE TABLE `user` (
@@ -411,7 +421,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `user`
+-- Дамп даних таблиці `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`, `verification_token`, `name`, `surname`) VALUES
@@ -419,11 +429,11 @@ INSERT INTO `user` (`id`, `username`, `auth_key`, `password_hash`, `password_res
 (2, 'Anonymous', '2xq68o97MqkuA1dLAnumdO4h7y_BpSGg', '$2y$13$/peTWUSTix3UBIwSJo/MZOhVYidSH9B3o3BieycVPh/1gypOrjAei', NULL, '', 10, 1596739121, 1596739121, 'yp2RX5QaPFtV0wYb26ubxgtUbYwur1hy_1596739121', 'Anonymous', 'Anonymous');
 
 --
--- Indexes for dumped tables
+-- Індекси збережених таблиць
 --
 
 --
--- Indexes for table `access`
+-- Індекси таблиці `access`
 --
 ALTER TABLE `access`
   ADD PRIMARY KEY (`id`),
@@ -431,14 +441,14 @@ ALTER TABLE `access`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `auth_assignment`
+-- Індекси таблиці `auth_assignment`
 --
 ALTER TABLE `auth_assignment`
   ADD PRIMARY KEY (`item_name`,`user_id`),
   ADD KEY `idx-auth_assignment-user_id` (`user_id`);
 
 --
--- Indexes for table `auth_item`
+-- Індекси таблиці `auth_item`
 --
 ALTER TABLE `auth_item`
   ADD PRIMARY KEY (`name`),
@@ -446,20 +456,20 @@ ALTER TABLE `auth_item`
   ADD KEY `idx-auth_item-type` (`type`);
 
 --
--- Indexes for table `auth_item_child`
+-- Індекси таблиці `auth_item_child`
 --
 ALTER TABLE `auth_item_child`
   ADD PRIMARY KEY (`parent`,`child`),
   ADD KEY `child` (`child`);
 
 --
--- Indexes for table `auth_rule`
+-- Індекси таблиці `auth_rule`
 --
 ALTER TABLE `auth_rule`
   ADD PRIMARY KEY (`name`);
 
 --
--- Indexes for table `collection`
+-- Індекси таблиці `collection`
 --
 ALTER TABLE `collection`
   ADD PRIMARY KEY (`id`),
@@ -467,7 +477,7 @@ ALTER TABLE `collection`
   ADD KEY `FK_collection_sample` (`sample_id`);
 
 --
--- Indexes for table `container`
+-- Індекси таблиці `container`
 --
 ALTER TABLE `container`
   ADD PRIMARY KEY (`containerId`),
@@ -475,7 +485,7 @@ ALTER TABLE `container`
   ADD KEY `storage` (`storage`);
 
 --
--- Indexes for table `host`
+-- Індекси таблиці `host`
 --
 ALTER TABLE `host`
   ADD PRIMARY KEY (`occurrenceID`),
@@ -486,14 +496,14 @@ ALTER TABLE `host`
   ADD KEY `updatedBy` (`updatedBy`);
 
 --
--- Indexes for table `image`
+-- Індекси таблиці `image`
 --
 ALTER TABLE `image`
   ADD PRIMARY KEY (`id`),
   ADD KEY `parId` (`parId`);
 
 --
--- Indexes for table `locality`
+-- Індекси таблиці `locality`
 --
 ALTER TABLE `locality`
   ADD PRIMARY KEY (`id`),
@@ -503,13 +513,13 @@ ALTER TABLE `locality`
   ADD KEY `island` (`island`);
 
 --
--- Indexes for table `migration`
+-- Індекси таблиці `migration`
 --
 ALTER TABLE `migration`
   ADD PRIMARY KEY (`version`);
 
 --
--- Indexes for table `modelhistory`
+-- Індекси таблиці `modelhistory`
 --
 ALTER TABLE `modelhistory`
   ADD PRIMARY KEY (`id`),
@@ -519,7 +529,7 @@ ALTER TABLE `modelhistory`
   ADD KEY `idx-user_id` (`user_id`);
 
 --
--- Indexes for table `sample`
+-- Індекси таблиці `sample`
 --
 ALTER TABLE `sample`
   ADD PRIMARY KEY (`id`),
@@ -528,27 +538,26 @@ ALTER TABLE `sample`
   ADD KEY `FK_sample_taxonomy` (`scienName`);
 
 --
--- Indexes for table `service`
+-- Індекси таблиці `service`
 --
 ALTER TABLE `service`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `storage`
+-- Індекси таблиці `storage`
 --
 ALTER TABLE `storage`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `taxonomy`
+-- Індекси таблиці `taxonomy`
 --
 ALTER TABLE `taxonomy`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `scientificName` (`scientificName`),
   ADD KEY `parId` (`parId`);
 
 --
--- Indexes for table `user`
+-- Індекси таблиці `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
@@ -556,114 +565,114 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `password_reset_token` (`password_reset_token`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT для збережених таблиць
 --
 
 --
--- AUTO_INCREMENT for table `access`
+-- AUTO_INCREMENT для таблиці `access`
 --
 ALTER TABLE `access`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `collection`
+-- AUTO_INCREMENT для таблиці `collection`
 --
 ALTER TABLE `collection`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `image`
+-- AUTO_INCREMENT для таблиці `image`
 --
 ALTER TABLE `image`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `locality`
+-- AUTO_INCREMENT для таблиці `locality`
 --
 ALTER TABLE `locality`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `modelhistory`
+-- AUTO_INCREMENT для таблиці `modelhistory`
 --
 ALTER TABLE `modelhistory`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `sample`
+-- AUTO_INCREMENT для таблиці `sample`
 --
 ALTER TABLE `sample`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `service`
+-- AUTO_INCREMENT для таблиці `service`
 --
 ALTER TABLE `service`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
--- AUTO_INCREMENT for table `storage`
+-- AUTO_INCREMENT для таблиці `storage`
 --
 ALTER TABLE `storage`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `taxonomy`
+-- AUTO_INCREMENT для таблиці `taxonomy`
 --
 ALTER TABLE `taxonomy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT для таблиці `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Constraints for dumped tables
+-- Обмеження зовнішнього ключа збережених таблиць
 --
 
 --
--- Constraints for table `access`
+-- Обмеження зовнішнього ключа таблиці `access`
 --
 ALTER TABLE `access`
   ADD CONSTRAINT `FK_access_taxonomy` FOREIGN KEY (`taxon_id`) REFERENCES `taxonomy` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_access_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `auth_assignment`
+-- Обмеження зовнішнього ключа таблиці `auth_assignment`
 --
 ALTER TABLE `auth_assignment`
   ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `auth_item`
+-- Обмеження зовнішнього ключа таблиці `auth_item`
 --
 ALTER TABLE `auth_item`
   ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `auth_item_child`
+-- Обмеження зовнішнього ключа таблиці `auth_item_child`
 --
 ALTER TABLE `auth_item_child`
   ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `collection`
+-- Обмеження зовнішнього ключа таблиці `collection`
 --
 ALTER TABLE `collection`
   ADD CONSTRAINT `FK_collection_sample` FOREIGN KEY (`sample_id`) REFERENCES `sample` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `container`
+-- Обмеження зовнішнього ключа таблиці `container`
 --
 ALTER TABLE `container`
   ADD CONSTRAINT `FK_container_host` FOREIGN KEY (`parId`) REFERENCES `host` (`occurrenceID`) ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_container_storage` FOREIGN KEY (`storage`) REFERENCES `storage` (`id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `host`
+-- Обмеження зовнішнього ключа таблиці `host`
 --
 ALTER TABLE `host`
   ADD CONSTRAINT `FK_host_locality` FOREIGN KEY (`placeName`) REFERENCES `locality` (`id`) ON UPDATE CASCADE,
@@ -673,13 +682,13 @@ ALTER TABLE `host`
   ADD CONSTRAINT `FK_host_user_3` FOREIGN KEY (`updatedBy`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `image`
+-- Обмеження зовнішнього ключа таблиці `image`
 --
 ALTER TABLE `image`
   ADD CONSTRAINT `FK_image_host` FOREIGN KEY (`parId`) REFERENCES `host` (`occurrenceID`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `locality`
+-- Обмеження зовнішнього ключа таблиці `locality`
 --
 ALTER TABLE `locality`
   ADD CONSTRAINT `FK_locality_service` FOREIGN KEY (`province`) REFERENCES `service` (`id`) ON UPDATE CASCADE,
@@ -687,7 +696,7 @@ ALTER TABLE `locality`
   ADD CONSTRAINT `FK_locality_service_3` FOREIGN KEY (`island`) REFERENCES `service` (`id`);
 
 --
--- Constraints for table `sample`
+-- Обмеження зовнішнього ключа таблиці `sample`
 --
 ALTER TABLE `sample`
   ADD CONSTRAINT `FK_sample_container` FOREIGN KEY (`parId`) REFERENCES `container` (`containerId`) ON UPDATE CASCADE,
@@ -695,7 +704,7 @@ ALTER TABLE `sample`
   ADD CONSTRAINT `FK_sample_user` FOREIGN KEY (`identifiedBy`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `taxonomy`
+-- Обмеження зовнішнього ключа таблиці `taxonomy`
 --
 ALTER TABLE `taxonomy`
   ADD CONSTRAINT `FK_taxonomy_taxonomy` FOREIGN KEY (`parId`) REFERENCES `taxonomy` (`id`);
