@@ -19,7 +19,7 @@ is_null($model->containerStatus) ? $model->containerStatus = true : null;
 
             <?php $form = ActiveForm::begin(); ?>
 
-            <? echo $model->scenario == 'create' ? $form->field($model, 'containerId')->textInput(['maxlength' => true]) : null ?>
+            <?= $model->scenario == 'create' ? $form->field($model, 'containerId')->textInput(['maxlength' => true]) : null ?>
 
             <?= $form->field($model, 'containerType')->textInput(['maxlength' => true])
                 ->widget(Select2::classname(), [

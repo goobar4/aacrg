@@ -135,7 +135,7 @@ class TaxonomyController extends Controller
             $query = new yii\db\Query;
             $query->select('id, scientificName AS text')
                 ->from('taxonomy')
-                ->where(['like', 'scientificName', $q])
+                ->where(['like', 'scientificName', $q.'%', false])
                 ->andWhere(['<>','rank',7])
                 ->limit(20);
             $command = $query->createCommand();

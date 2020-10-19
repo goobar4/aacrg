@@ -75,9 +75,9 @@ class ServiceLayer extends Model
             
             $query->select('id, '.$field.' AS text')
                 ->from($table)
-                ->where(['like', $field, $q]);
+                ->where(['like', $field, $q.'%', false]);           
                 $table == 'taxonomy' ? $query->andWhere(['<>', $field, 'nohelminth']) : null;             
-                $query->limit(20);
+                $query->limit(30);
             $command = $query->createCommand();
             $data = $command->queryAll();
             $out['results'] = array_values($data);

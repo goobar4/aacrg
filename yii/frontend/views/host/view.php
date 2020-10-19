@@ -257,7 +257,7 @@ foreach ($images as $image) {
                                         <?=  $d['value'] ?>
                                     </td>
                                     <td>
-                                        <? if($d['prepType']!=='21'){
+                                        <?php if($d['prepType']!=='21'){
                                         echo $d['scientificName'] ?'<i>'.$d['scientificName'] . '</i> ('./* $d['sex'] .*/  $d['individualCount'] . ')' : null; }
                                         ?>
                                     </td>

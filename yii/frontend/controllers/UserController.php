@@ -258,10 +258,11 @@ class UserController extends Controller
             $query = new yii\db\Query;
             $query->select('id, scientificName AS text')
                 ->from('taxonomy')
-                ->where(['like', 'scientificName', $q])
-                ->limit(20);
+                ->where(['like', 'scientificName', $q.'%', false])
+				->orderBy('scientificName ASC')
+                ->limit(30);
             $command = $query->createCommand();
-            $data = $command->queryAll();
+			$data = $command->queryAll();
             $out['results'] = array_values($data);
         } elseif ($id > 0) {
             $out['results'] = ['id' => $id, 'text' => Taxonomy::find($id)->scientificName];

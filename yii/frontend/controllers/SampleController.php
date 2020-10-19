@@ -90,13 +90,14 @@ class SampleController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+		$initial_name = $model->scienName;
         // Find host of this sample        
         $lists = $this->setLists();
         $post = Yii::$app->request->post();
 
         // process ajax from Detail View Kartik
-        if (Yii::$app->request->isAjax && isset($post['kvdelete'])) {
-            if (Yii::$app->user->can('canEdit', ['id' => $model->scienName])) {
+        if (Yii::$app->request->isAjax && isset($post['kvdelete'])) {			
+            if (Yii::$app->user->can('canEdit', ['id' => $initial_name])) {
                 //code the same as for actionDelete
                 if ($model->delation()) {
                     return $this->redirect(['container/view', 'id' => $model->parId]);
@@ -119,7 +120,8 @@ class SampleController extends Controller
             if ($model->load($post)) {
                 if ($model->validate()) {
                     //save if user have acces
-                    if (Yii::$app->user->can('canEdit', ['id' => $model->scienName])) {
+					
+                    if (Yii::$app->user->can('canEdit', ['id' => $initial_name])) {
                         $model->save(false);
                     } else {
                         throw new ForbiddenHttpException('You are not allowed to perform this action.');
@@ -240,7 +242,7 @@ class SampleController extends Controller
             $query = new yii\db\Query;
             $query->select('id, scientificName AS text')
                 ->from('taxonomy')
-                ->where(['like', 'scientificName', $q])
+                ->where(['like', 'scientificName', $q.'%', false])
                 ->limit(20);
             $command = $query->createCommand();
             $data = $command->queryAll();
