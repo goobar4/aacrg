@@ -278,7 +278,9 @@ class HostController extends Controller
             }
             return $this->redirect(['index']);
         } else {
-            if (Yii::$app->user->can('canAdmin')){
+
+                        
+            if (Yii::$app->user->can('canAdmin') || $this->getRole()=='user'){
             try {
                 if ($model->isEmpty == 1 and $model->isDeleted == 1) {
                     $empty = Container::find()->where(['parId' => $id]);
@@ -306,8 +308,9 @@ class HostController extends Controller
             }
         } else {
             throw new ForbiddenHttpException('You have not right to delete this record.');
+            
         }
-        }
+        }      
     }
 
     public function actionRestore($id)
@@ -374,7 +377,11 @@ class HostController extends Controller
     }
     protected function softDelation($id)
     {
-        $model = $this->findModel($id);   
+        $model = $this->findModel($id);  
+        
+        if ($model->isDeleted == 1) {
+            return $this->redirect(['view', 'id' => $model->occurrenceID]);
+        }
      
         if ($model->hasChildren() == 0 or $model->hasDeletedChildren()==$model->hasChildren()) {
             $model->isDeleted = 1;
@@ -383,5 +390,12 @@ class HostController extends Controller
         } else {
             return false;
         }
+    }
+
+    //get name of user role
+    protected function getRole()
+    {        
+        $user = Yii::$app->getUser()->identity->role;
+        return $user->item_name;
     }
 }

@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
 
     [
-        'attribute' => 'PhylumH',
+        'attribute' => 'phylumH',
         'label' => 'Phylum (h)',
         'format' => 'raw'
     ],

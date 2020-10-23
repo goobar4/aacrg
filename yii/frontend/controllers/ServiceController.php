@@ -34,7 +34,7 @@ class ServiceController extends Controller
                     [
                         'actions' => ['create','update','delete'],
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'roles' => ['admin','user'],
                     ],
                     [
                         'actions' => ['index','view'],

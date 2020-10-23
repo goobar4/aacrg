@@ -269,7 +269,8 @@ class Container extends \yii\db\ActiveRecord
         if ($this->isDeleted == 1) {
 
             if ($this->hasChildren() == 0 or $this->prepType == '21') {
-                if (Yii::$app->user->can('canAdmin')) {
+                
+                if (Yii::$app->user->can('canAdmin') || $this->getRole()=='user') {
                     return $this->delete();
                 } else {
                     throw new \yii\web\ForbiddenHttpException('You have not right to delete this record.');
@@ -332,5 +333,12 @@ class Container extends \yii\db\ActiveRecord
         $model_sample = $model_sample->findOne(['parId'=>$model['containerId']]);
         $model_sample->delete();
         $model->delete();
+    }
+
+    //get name of user role
+    protected function getRole()
+    {        
+        $user = Yii::$app->getUser()->identity->role;
+        return $user->item_name;
     }
 }
