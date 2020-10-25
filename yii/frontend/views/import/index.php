@@ -27,5 +27,5 @@ use yii\helpers\Url;
 <?php ActiveForm::end() ?>
 
 <p>The file for import should be saved in csv format with UTF 8 encoding. Please use this
-<a href="#" download= <?= Url::base($schema = true).'/uploads/test.csv'?> title="">example</a>
+<a href="<?= Url::base($schema = true).'/uploads/test.csv'?>" title="">example</a>
 a template. Use ; as separtor and do not use ; for any other purposes. The format of the date should be yyyy-mm-dd.</p>
