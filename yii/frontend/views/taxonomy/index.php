@@ -14,7 +14,11 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="taxonomy-index">
 
     <p>
-        <?php if (Yii::$app->user->can('canAdmin')){
+        <?php
+        
+        $user = Yii::$app->getUser()->identity->role;
+        
+        if (Yii::$app->user->can('canAdmin') || $user->item_name == 'user'){
              echo Html::a('Create', ['create'], ['class' => 'btn btn-success']);} ?>
         <?= Html::a('Reset', ['index', 'reset'=>1], ['class' => 'btn btn-default']) ?>
     </p>

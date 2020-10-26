@@ -73,10 +73,8 @@ if ($flag == 1) {
 
     <?= $form->field($model, 'parasite_phylum') ?>
 
-    <?= $form->field($model, 'age') ?>
+    <?= $form->field($model, 'age') ?>    
     
-    <?// $form->field($model, 'sex') ?>
-
     <?= $form->field($model, 'province') ?>
 
     <?= $form->field($model, 'country') ?>
