@@ -46,10 +46,10 @@ if ($flag == 1) {
 
     <div class='row'>
     <div class='col-lg-6'>
-    <?= $form->field($model, 'from') ?>
+    <?= $form->field($model, 'from')->textInput(['placeholder' => 'yyyy-mm-dd']) ?>
     </div>
     <div class='col-lg-6'>
-    <?= $form->field($model, 'to') ?>
+    <?= $form->field($model, 'to')->textInput(['placeholder' => 'yyyy-mm-dd']) ?>
     </div>
     </div>
     <div id="demo" class="collapse">

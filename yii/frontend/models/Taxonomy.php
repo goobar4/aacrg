@@ -81,7 +81,7 @@ class Taxonomy extends \yii\db\ActiveRecord
 
         if ($this->id == 7 or $this->id == 1) {
            return  Yii::$app->session->setFlash('error', 'This record can not be changed.');
-        }
+        }        
 
         return true;
     }
@@ -97,9 +97,18 @@ class Taxonomy extends \yii\db\ActiveRecord
         if($this->id == 7 or $this->id == 1){
             return Yii::$app->session->setFlash('error', 'This record can not be deleted.');
         }
+        
+        TaxonomyIndex::deleteAll(['ID' => $this->id]);
+
         return true;
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        //indexing
+        TaxonomyIndex::updateRecord($this->id);
+    }
+    
    
     /**
      * Gets query for [[Hosts]].

@@ -21,6 +21,17 @@ $this->params['breadcrumbs'][] = $this->title;
         if (Yii::$app->user->can('canAdmin') || $user->item_name == 'user'){
              echo Html::a('Create', ['create'], ['class' => 'btn btn-success']);} ?>
         <?= Html::a('Reset', ['index', 'reset'=>1], ['class' => 'btn btn-default']) ?>
+        <?php
+        if(Yii::$app->user->can('canAdmin')){
+            echo Html::a('Re-index', ['re-index'], [
+                'class' => 'btn btn-default',
+                'data' => [
+                    'confirm' => 'It may take a few minutes?',
+                    'method' => 'get',
+                ],
+            ]);           
+        }
+        ?>
     </p>
 
     <?php Pjax::begin(); ?>

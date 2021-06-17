@@ -27,6 +27,7 @@ use nhkey\arh\ActiveRecordHistoryBehavior;
  * @property int|null $createdAt
  * @property int|null $editedAt
  * @property int|null $updatedBy
+ * @property string $parNumber
  *
  * @property Container $par
  * @property Taxonomy $scienName0
@@ -89,6 +90,7 @@ class Sample extends \yii\db\ActiveRecord
             [['confidence'],'integer','min'=>0,'max'=>100],
             [['parId', 'qualifier'], 'string', 'max' => 30],
             [['remarks'], 'string', 'max' => 2000],
+            [['parNumber'], 'string', 'max' => 255],
             [['parId'], 'exist', 'skipOnError' => true, 'targetClass' => Container::className(), 'targetAttribute' => ['parId' => 'containerId']],
             [['scienName'], 'exist', 'skipOnError' => true, 'targetClass' => Taxonomy::className(), 'targetAttribute' => ['scienName' => 'id']],
             [['identifiedBy'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['identifiedBy' => 'id']],
@@ -116,6 +118,7 @@ class Sample extends \yii\db\ActiveRecord
             'createdAt' => 'Created At',
             'editedAt' => 'Edited At',
             'updatedBy' => 'Updated By',
+            'parNumber' => 'Parasite number',
         ];
     }
 

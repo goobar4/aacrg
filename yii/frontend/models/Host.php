@@ -98,6 +98,7 @@ class Host extends \yii\db\ActiveRecord
             [['sAIAB_Catalog_Number'], 'string', 'max' => 20],
             [['comments'], 'string', 'max' => 2000],
             [['occurrenceID'], 'unique'],
+            ['carcass', 'string'],
             [['placeName'], 'exist', 'skipOnError' => true, 'targetClass' => Locality::className(), 'targetAttribute' => ['placeName' => 'id']],
             [['sciName'], 'exist', 'skipOnError' => true, 'targetClass' => Taxonomy::className(), 'targetAttribute' => ['sciName' => 'id']],
             [['determiner'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['determiner' => 'id']],

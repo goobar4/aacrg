@@ -144,6 +144,11 @@ $history = Html::a('   ', Url::to(['host/history', 'id' => $model->id, 'table'=>
                     ],
                 ],
 
+                [
+                    'attribute' => 'parNumber',
+                    'value' => $model->parNumber,                        
+                ],
+
                     [
                         'attribute' => 'qualifier',
                         'value' => $model->qualifier,                        

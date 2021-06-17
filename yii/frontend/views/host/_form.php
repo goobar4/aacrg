@@ -153,6 +153,17 @@ use kartik\date\DatePicker;
 
             ]); ?>
 
+            <?= $form->field($model, 'carcass', ['inputOptions' => ['autocomplete' => 'off']])->widget(SwitchInput::classname(), [
+                'pluginOptions' => [
+                    'onText' => 'Yes',
+                    'offText' => 'No',
+                ],
+                'value' => $model->isEmpty ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+
+
+
+            ]); ?>
+
             <div id="demo" class="collapse">
                 <?= $form->field($model, 'sAIAB_Catalog_Number')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'сonfidence')->textInput(['maxlength' => true, 'value' => 0]) ?>

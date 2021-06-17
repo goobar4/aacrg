@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use Yii;
 use frontend\models\Taxonomy;
 use frontend\models\TaxonomySearch;
+use frontend\models\TaxonomyIndex;
 use frontend\models\ServiceLayer;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,6 +34,11 @@ class TaxonomyController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
+                        'actions' => ['re-index'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                    [
                         'actions' => ['create','update','delete', 'taxon-list'],
                         'allow' => true,
                         'roles' => ['admin', 'user'],
@@ -52,8 +58,9 @@ class TaxonomyController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    {
-       $searchModel = new TaxonomySearch();
+    {       
+
+        $searchModel = new TaxonomySearch();
         //remmember filter
         $param = ServiceLayer::setSession(Yii::$app->request->queryParams, 'TaxonomySearch');
 
@@ -146,6 +153,15 @@ class TaxonomyController extends Controller
         }
         return $out;
     }
+
+
+    public function actionReIndex()
+    {
+        $model = new TaxonomyIndex();
+        $model->reIndex();
+        return $this->redirect('index');
+    }
+  
 
     /**
      * Finds the Taxonomy model based on its primary key value.

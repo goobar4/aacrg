@@ -73,6 +73,8 @@ $url_taxon = \yii\helpers\Url::to(['taxon-list']);
                         'allowClear' => true
                     ],
                 ]); ?>
+            
+            <?= $form->field($model, 'parNumber')->textInput() ?>
 
             <div id="demo" class="collapse">
 
@@ -99,6 +101,7 @@ $url_taxon = \yii\helpers\Url::to(['taxon-list']);
                 <?= $form->field($model, 'qualifier')->textInput() ?>
 
                 <?= $form->field($model, 'confidence')->textInput() ?>
+                
 
             </div>
 

@@ -31,9 +31,7 @@ class VialSearch extends yii\base\Model
     public $province;
     public $country;
 
-
-	
-
+    
     public function rules()
     {
         return [
@@ -48,23 +46,25 @@ class VialSearch extends yii\base\Model
 
 
     public function search($params, $flag)
-    {
-
+    {      
        
         $this->load($params);
-
-       
+         
         $sql = "SELECT h.occurrenceID AS hostN, tax1.scientificName AS host,
-        th2.scientificName AS speciesH, th3.scientificName AS genusH, th4.scientificName AS familyH, th5.scientificName AS orderH,
-        th6.scientificName AS classH, th7.scientificName AS phylumH,
+        th_genus.scientificName AS genusH, th_family.scientificName AS familyH,
+        th_order.scientificName AS orderH, th_class.scientificName AS classH,
+        th_phylum.scientificName AS phylumH,
+       
         se1.VALUE AS age, se2.VALUE AS sex,
         l.localityName AS place, se4.VALUE AS province, se5.VALUE AS country,
         l.decimalLatitude AS decimalLatitude, l.decimalLongitude AS decimalLongitude,
         h.occurenceDate AS date,
         c.containerId, se3.VALUE AS prepType,
-        tax2.scientificName AS parasite, tax2.rank,
-        tp2.scientificName AS speciesP, tp3.scientificName AS genusP, tp4.scientificName AS familyP, tp5.scientificName AS orderP,
-        tp6.scientificName AS classP, tp7.scientificName AS phylumP,
+        tp_species.scientificName AS parasite,
+        tp_genus.scientificName AS genusP, tp_family.scientificName AS familyP,
+        tp_order.scientificName AS orderP, tp_class.scientificName AS classP,
+        tp_phylum.scientificName AS phylumP,
+       
         SUM(s.individualCount) AS individualCount
         FROM host h
         LEFT JOIN container c ON h.occurrenceID = c.parId
@@ -76,21 +76,22 @@ class VialSearch extends yii\base\Model
         LEFT JOIN service se1 ON h.age = se1.id
         LEFT JOIN service se2 ON h.sex = se2.id
         LEFT JOIN service se3 ON c.prepType = se3.id
-        LEFT JOIN taxonomy tax2 ON s.scienName = tax2.id
-        
-        LEFT JOIN taxonomy th2 ON h.sciName = th2.id AND th2.rank = 7
-        LEFT JOIN taxonomy th3 ON IF(tax1.rank=6, h.sciName = th3.id, th2.parId = th3.id) AND th3.rank = 6 
-        LEFT JOIN taxonomy th4 ON IF(tax1.rank=5, h.sciName = th4.id, th3.parId = th4.id) AND th4.rank = 5 
-        LEFT JOIN taxonomy th5 ON IF(tax1.rank=4, h.sciName = th5.id, th4.parId = th5.id) AND th5.rank = 4
-        LEFT JOIN taxonomy th6 ON IF(tax1.rank=3, h.sciName = th6.id, th5.parId = th6.id) AND th6.rank = 3
-        LEFT JOIN taxonomy th7 ON IF(tax1.rank=2, h.sciName = th7.id, th6.parId = th7.id) AND th7.rank = 2
-        
-        LEFT JOIN taxonomy tp2 ON s.scienName = tp2.id AND tp2.rank = 7
-        LEFT JOIN taxonomy tp3 ON IF(tax2.rank=6, s.scienName = tp3.id, tp2.parId = tp3.id) AND tp3.rank = 6 
-        LEFT JOIN taxonomy tp4 ON IF(tax2.rank=5, s.scienName = tp4.id, tp3.parId = tp4.id) AND tp4.rank = 5
-        LEFT JOIN taxonomy tp5 ON IF(tax2.rank=4, s.scienName = tp5.id, tp4.parId = tp5.id) AND tp5.rank = 4
-        LEFT JOIN taxonomy tp6 ON IF(tax2.rank=3, s.scienName = tp6.id, tp5.parId = tp6.id) AND tp6.rank = 3
-        LEFT JOIN taxonomy tp7 ON IF(tax2.rank=2, s.scienName = tp7.id, tp6.parId = tp7.id) AND tp7.rank = 2
+       
+       LEFT JOIN taxonomy_index tax_ind_p ON s.scienName = tax_ind_p.ID
+       LEFT JOIN taxonomy tp_species ON tax_ind_p.id = tp_species.id
+        LEFT JOIN taxonomy tp_genus ON tax_ind_p.genus = tp_genus.id
+        LEFT JOIN taxonomy tp_family ON tax_ind_p.family = tp_family.id
+        LEFT JOIN taxonomy tp_order ON tax_ind_p._order = tp_order.id
+        LEFT JOIN taxonomy tp_class ON tax_ind_p.class = tp_class.id
+        LEFT JOIN taxonomy tp_phylum ON tax_ind_p.phylum = tp_phylum.id       
+       
+        LEFT JOIN taxonomy_index tax_ind_h ON h.sciName = tax_ind_h.ID
+        LEFT JOIN taxonomy th_species ON tax_ind_h.id = th_species.id
+        LEFT JOIN taxonomy th_genus ON tax_ind_h.genus = th_genus.id
+        LEFT JOIN taxonomy th_family ON tax_ind_h.family = th_family.id
+        LEFT JOIN taxonomy th_order ON tax_ind_h._order = th_order.id
+        LEFT JOIN taxonomy th_class ON tax_ind_h.class = th_class.id
+        LEFT JOIN taxonomy th_phylum ON tax_ind_h.phylum = th_phylum.id
 
         WHERE h.occurrenceID IS NOT NULL AND h.isDeleted<>1 and c.isDeleted<>1 And s.isDeleted<>1
         ";
@@ -107,11 +108,11 @@ class VialSearch extends yii\base\Model
          }
          if ($this->parasite) {
             $param[':parasite'] = $this->parasite.'%';
-            $sql = $sql . ' AND tax2.scientificName like :parasite';
+            $sql = $sql . ' AND tp_species.scientificName like :parasite';
          }
          if ($this->host) {
             $param[':host'] = $this->host.'%';
-            $sql = $sql . ' AND h.occurrenceID like :host';
+            $sql = $sql . ' AND th_species.scientificName like :host';
          }
          if ($this->place) {
             $param[':place'] = $this->place.'%';
@@ -127,44 +128,44 @@ class VialSearch extends yii\base\Model
          }
 
          if ($this->host_genus) {
-            $param[':host_genus'] = $this->host_genus.'%';
-            $sql = $sql . ' AND th3.scientificName like :host_genus';
+            $param[':host_genus'] =  $this->host_genus.'%';
+            $sql = $sql . ' AND th_genus.scientificName like :host_genus';          
          }
          if ($this->host_family) {
             $param[':host_family'] = $this->host_family.'%';
-            $sql = $sql . ' AND th4.scientificName like :host_family';
+            $sql = $sql . ' AND th_family.scientificName like :host_family';        
          }
          if ($this->host_order) {
             $param[':host_order'] = $this->host_order.'%';
-            $sql = $sql . ' AND th5.scientificName like :host_order';
+            $sql = $sql . ' AND th_order.scientificName like :host_order';
          }
          if ($this->host_class) {
             $param[':host_class'] = $this->host_class.'%';
-            $sql = $sql . ' AND th6.scientificName like :host_class';
+            $sql = $sql . ' AND th_class.scientificName like :host_class';
          }
          if ($this->host_phylum) {
             $param[':host_phylum'] = $this->host_phylum.'%';
-            $sql = $sql . ' AND th7.scientificName like :host_phylum';
+            $sql = $sql . ' AND th_phylum.scientificName like :host_phylum';           
          }
          if ($this->parasite_genus) {
             $param[':parasite_genus'] = $this->parasite_genus.'%';
-            $sql = $sql . ' AND tp3.scientificName like :parasite_genus';
+            $sql = $sql . ' AND tp_genus.scientificName like :parasite_genus';
          }
          if ($this->parasite_family) {
             $param[':parasite_family'] = $this->parasite_family.'%';
-            $sql = $sql . ' AND tp4.scientificName like :parasite_family';
+            $sql = $sql . ' AND tp_family.scientificName like :parasite_family';
          }
          if ($this->parasite_order) {
             $param[':parasite_order'] = $this->parasite_order.'%';
-            $sql = $sql . ' AND tp5.scientificName like :parasite_order';
+            $sql = $sql . ' AND tp_order.scientificName like :parasite_order';
          }
          if ($this->parasite_class) {
             $param[':parasite_class'] = $this->parasite_class.'%';
-            $sql = $sql . ' AND tp6.scientificName like :parasite_class';
+            $sql = $sql . ' AND tp_class.scientificName like :parasite_class';
          }
          if ($this->parasite_phylum) {
             $param[':parasite_phylum'] = $this->parasite_phylum.'%';
-            $sql = $sql . ' AND tp7.scientificName like :parasite_phylum';
+            $sql = $sql . ' AND tp_phylum.scientificName like :parasite_phylum';
          }
          if ($this->sex) {
             $param[':sex'] = $this->sex.'%';

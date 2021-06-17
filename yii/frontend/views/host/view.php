@@ -202,6 +202,20 @@ foreach ($images as $image) {
                         ],
                         'value' => $model->isEmpty ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
                     ],
+
+                    [
+                        'attribute' => 'carcass',
+                        'format' => 'raw',
+                        'type' => DetailView::INPUT_SWITCH,
+                        'widgetOptions' => [
+                            'pluginOptions' => [
+                                'onText' => 'Yes',
+                                'offText' => 'No',
+                            ]
+                        ],
+                        'value' => $model->carcass ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-danger">No</span>',
+                    ],
+
                     [
                         'attribute' => 'sAIAB_Catalog_Number',
                         'type' => DetailView::INPUT_TEXT,
