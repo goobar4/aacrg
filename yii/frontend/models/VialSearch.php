@@ -31,6 +31,8 @@ class VialSearch extends yii\base\Model
     public $province;
     public $country;
 
+    public $pagination = 20;
+
     
     public function rules()
     {
@@ -200,7 +202,7 @@ class VialSearch extends yii\base\Model
             'params' => $param,
             'totalCount' => $count,
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => $this->pagination,
             ],
             'sort' => [
                 'attributes' => [

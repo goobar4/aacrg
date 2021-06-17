@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 
 if ($flag == 1) {
     $action = 'vial';
-} elseif($flag == 2) {
+} elseif ($flag == 2) {
     $action = 'export';
 }
 
@@ -28,12 +28,12 @@ if ($flag == 1) {
     <?= $form->field($model, 'container') ?>
 
     <?= $form->field($model, 'prepType')->dropDownList(
-        $options= [
+        $options = [
             '',
-            'helminth'=>'helminth',	
-            'tissue'=>'tissue',	
-            'protozoan'=>'protozoan',
-            'nosample'=>'nosample',
+            'helminth' => 'helminth',
+            'tissue' => 'tissue',
+            'protozoan' => 'protozoan',
+            'nosample' => 'nosample',
         ]
 
     ) ?>
@@ -45,39 +45,39 @@ if ($flag == 1) {
     <?= $form->field($model, 'place') ?>
 
     <div class='row'>
-    <div class='col-lg-6'>
-    <?= $form->field($model, 'from')->textInput(['placeholder' => 'yyyy-mm-dd']) ?>
-    </div>
-    <div class='col-lg-6'>
-    <?= $form->field($model, 'to')->textInput(['placeholder' => 'yyyy-mm-dd']) ?>
-    </div>
+        <div class='col-lg-6'>
+            <?= $form->field($model, 'from')->textInput(['placeholder' => 'yyyy-mm-dd']) ?>
+        </div>
+        <div class='col-lg-6'>
+            <?= $form->field($model, 'to')->textInput(['placeholder' => 'yyyy-mm-dd']) ?>
+        </div>
     </div>
     <div id="demo" class="collapse">
-    <?= $form->field($model, 'host_genus') ?>
+        <?= $form->field($model, 'host_genus') ?>
 
-    <?= $form->field($model, 'host_family') ?>
-    
-    <?= $form->field($model, 'host_order') ?>
+        <?= $form->field($model, 'host_family') ?>
 
-    <?= $form->field($model, 'host_class') ?>
+        <?= $form->field($model, 'host_order') ?>
 
-    <?= $form->field($model, 'host_phylum') ?>
+        <?= $form->field($model, 'host_class') ?>
 
-    <?= $form->field($model, 'parasite_genus') ?>
+        <?= $form->field($model, 'host_phylum') ?>
 
-    <?= $form->field($model, 'parasite_family') ?>
-    
-    <?= $form->field($model, 'parasite_order') ?>
+        <?= $form->field($model, 'parasite_genus') ?>
 
-    <?= $form->field($model, 'parasite_class') ?>
+        <?= $form->field($model, 'parasite_family') ?>
 
-    <?= $form->field($model, 'parasite_phylum') ?>
+        <?= $form->field($model, 'parasite_order') ?>
 
-    <?= $form->field($model, 'age') ?>    
-    
-    <?= $form->field($model, 'province') ?>
+        <?= $form->field($model, 'parasite_class') ?>
 
-    <?= $form->field($model, 'country') ?>
+        <?= $form->field($model, 'parasite_phylum') ?>
+
+        <?= $form->field($model, 'age') ?>
+
+        <?= $form->field($model, 'province') ?>
+
+        <?= $form->field($model, 'country') ?>
     </div>
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

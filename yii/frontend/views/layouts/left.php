@@ -18,7 +18,8 @@
         -->
 
         <!-- search form 
-        <form action=<?php // Url::to(['search/index'], $schema = true)?> method="get" class="sidebar-form">
+        <form action=<?php // Url::to(['search/index'], $schema = true)
+                        ?> method="get" class="sidebar-form">
             <div class="input-group">
                 <?php /*
                 $url = Url::to(['search/simple']);
@@ -42,15 +43,16 @@
                         'templateSelection' => new JsExpression('function (localityName) { return localityName.text; }'),
                     ],
                 ]);
-                */?>
+                */ ?>
                 <span class="input-group-btn">
-                    <button type='submit' action=<?php // Url::to(['search/index'], $schema = true)?>  id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
+                    <button type='submit' action=<?php // Url::to(['search/index'], $schema = true)
+                                                    ?>  id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
                     </button>
                 </span>
             </div>
         </form>-->
         <!-- /.search form -->
-   
+
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget' => 'tree'],
@@ -70,7 +72,7 @@
                             ["label" => "Sample", "url" => ["sample/index"]],
                         ],
                     ],
-                   
+
                     [
                         "label" => "Service tables",
                         "icon" => "table",
@@ -91,14 +93,24 @@
                             ["label" => "Hosts", "url" => ["host/deleted-host"]],
                             ["label" => "Container", "url" => ["container/deleted-container"]],
                             ["label" => "Sample", "url" => ["sample/deleted-sample"]],
+                        ],
                     ],
-                ],
 
-                    ["label" => "Profile", "url" => ['user/view', 'id'=> Yii::$app->user->id], "icon" => "user"],
+                    [
+                        "label" => "Map",
+                        "icon" => "map",
+                        "url" => "#",
+                        "items" => [
+                            ["label" => "Hosts", "url" => ["search/map-host"]],
+                            ["label" => "Parasites", "url" => ["search/map-parasite"]],
+                        ],
+                    ],
+
+                    ["label" => "Profile", "url" => ['user/view', 'id' => Yii::$app->user->id], "icon" => "user"],
                     ["label" => "Export", "url" => ['search/export'], "icon" => "fas fa-download", 'visible' => Yii::$app->user->can('canAdmin')],
                     ["label" => "Import", "url" => ['import/index'], "icon" => "fas fa-upload", 'visible' => Yii::$app->user->can('canAdmin')],
-					["label" => "About", "url" => ['site/about'], "icon" => "question"],
-                  
+                    ["label" => "About", "url" => ['site/about'], "icon" => "question"],
+
                 ],
             ]
         ) ?>

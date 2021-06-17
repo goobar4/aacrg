@@ -11,6 +11,8 @@ use frontend\models\Host;
  */
 class HostSearch extends Host
 {
+   public $pagination = 20;
+   
     /**
      * {@inheritdoc}
      */
@@ -18,16 +20,16 @@ class HostSearch extends Host
     public function attributes()
     {
         return array_merge(parent::attributes(), [
-            'sciName0.scientificName', 'placeName0.localityName', 'sexValue.value',
-            'ageValue.value'
+            'sciName0.scientificName', 'sexValue.value',
+            'ageValue.value', 'placeName0.province', 'placeName0.country', 'placeName0.localityName'
         ]);
     }
     public function rules()
     {
         return [
             [[
-                'occurrenceID', 'sexValue.value', 'ageValue.value', 'occurenceDate', 'sciName0.scientificName', 'placeName0.localityName',
-                'isDeleted', 'isEmpty'
+                'occurrenceID', 'sexValue.value', 'ageValue.value', 'occurenceDate', 'sciName0.scientificName',
+                'isDeleted', 'isEmpty', 'placeName0.province', 'placeName0.country', 'placeName0.localityName'
             ], 'trim'],
 
         ];
@@ -65,12 +67,18 @@ class HostSearch extends Host
         $query->joinWith(['ageValue' => function ($query) {
             $query->from(['ageValue' => 'service']);
         }]);
+       $query->leftJoin('service spr', 'placeName0.province = spr.id');
+       $query->leftJoin('service scount', 'placeName0.country = scount.id');
+
 
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => $this->pagination,
+            ],
         ]);
 
         $dataProvider->sort->attributes['sciName0.scientificName'] = [
@@ -107,6 +115,8 @@ class HostSearch extends Host
             ->andFilterWhere(['like', 'occurenceDate', $this->occurenceDate])
             ->andFilterWhere(['like', 'sciName0.scientificName', $this->getAttribute('sciName0.scientificName')])
             ->andFilterWhere(['like', 'placeName0.localityName', $this->getAttribute('placeName0.localityName')])
+            ->andFilterWhere(['like', 'spr.value', $this->getAttribute('placeName0.province')])
+            ->andFilterWhere(['like', 'scount.value', $this->getAttribute('placeName0.country')])
             ->andFilterWhere(['=', 'sexValue.value', $this->getAttribute('sexValue.value')])
             ->andFilterWhere(['like', 'ageValue.value', $this->getAttribute('ageValue.value')]);
 
