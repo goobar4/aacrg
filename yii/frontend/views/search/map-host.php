@@ -9,7 +9,7 @@ $coordinates = '';
 foreach ($dataProvider->models as $model) {
  
     $link_content = $model->sciName0->scientificName . ' (' . $model->occurrenceID . ')';
-    $url = Url::to(['container/view', 'id' => $model->occurrenceID]);
+    $url = Url::to(['host/view', 'id' => $model->occurrenceID]);
     $link = "<a href=$url>$link_content</a";
 
     $coordinates = $coordinates . '
