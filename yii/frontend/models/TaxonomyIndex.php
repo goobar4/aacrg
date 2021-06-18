@@ -80,8 +80,7 @@ class TaxonomyIndex extends \yii\db\ActiveRecord
     }
 
     public static function updateRecord($id)
-    {
-
+    {        
         $index = new TaxonomyIndex;
         $modelsArray = $index->getTaxonomyTableAsArray();
 
@@ -92,7 +91,10 @@ class TaxonomyIndex extends \yii\db\ActiveRecord
 
     protected function getTaxonomyTableAsArray()
     {
+        $oldLimit = ini_get( 'memory_limit');
+        ini_set( 'memory_limit', '1024M');
         $models = Taxonomy::find()->asArray()->all();
+        ini_set( 'memory_limit', $oldLimit);
         return ArrayHelper::index($models, 'id');
     }
 }
